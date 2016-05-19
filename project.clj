@@ -11,6 +11,9 @@
   :ring {:handler bob-poc.routes.handler/app :port 3399 :reload-paths ["src/"]}
   :uberjar-name "server.jar"
   :source-paths ["src/"]
-  :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]]
+  :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
+                                  [speclj "3.3.0"]]
                    :plugins [[lein-ring "0.9.7"]]}}
+  :plugins [[speclj "3.3.0"]]
+  :test-paths ["spec"]
   :main bob-poc.core)
