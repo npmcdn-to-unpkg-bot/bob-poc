@@ -1,4 +1,4 @@
-(ns react-test.routes.resource-routes
+(ns bob-poc.routes.resource-routes
   (:require [compojure.api.sweet :refer :all]
             [compojure.route :refer [resources]]
             [ring.util.http-response :refer :all]))

@@ -1,21 +1,21 @@
-(ns react-test.core
+(ns bob-poc.core
   (:gen-class)
   (:require [clojure.tools.logging :refer [info error]]
             [ring.adapter.jetty :as jetty]
-            [react-test.routes.handler :refer [app]])
+            [bob-poc.routes.handler :refer [app]])
   (:import [java.lang Runtime Thread]))
 
 (def ^:private app-server (atom nil))
 
 (defn- start-server []
-  (info "Starting React test...")
+  (info "Starting BoB-POC...")
   (reset! app-server (jetty/run-jetty app {:max-threads 100 :port 3399 :join? false}))
   (info "React test started successfully!"))
 
 (defn- stop-server []
-  (info "Stopping React test...")
+  (info "Stopping BoB-POC...")
   (.stop @app-server)
-  (info "React test stopped successfully!"))
+  (info "BoB-POC stopped successfully!"))
 
 (defn -main []
   (try

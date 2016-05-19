@@ -1,4 +1,4 @@
-(defproject react-test "0.1.0-SNAPSHOT"
+(defproject bob-poc "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-time "0.11.0"] ; required due to bug in `lein-ring uberwar`
@@ -8,9 +8,9 @@
                  [ch.qos.logback/logback-core "1.1.3"]
                  [ch.qos.logback/logback-classic "1.1.3"]
                  [net.logstash.logback/logstash-logback-encoder "4.5.1"]]
-  :ring {:handler react-test.routes.handler/app :port 3399 :reload-paths ["src/"]}
+  :ring {:handler bob-poc.routes.handler/app :port 3399 :reload-paths ["src/"]}
   :uberjar-name "server.jar"
   :source-paths ["src/"]
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]]
                    :plugins [[lein-ring "0.9.7"]]}}
-  :main react-test.core)
+  :main bob-poc.core)

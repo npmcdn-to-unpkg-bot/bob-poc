@@ -1,4 +1,4 @@
-(ns react-test.routes.api-routes
+(ns bob-poc.routes.api-routes
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [clojure.tools.logging :refer [debug]]))

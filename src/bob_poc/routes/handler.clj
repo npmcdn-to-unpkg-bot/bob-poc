@@ -1,8 +1,8 @@
-(ns react-test.routes.handler
+(ns bob-poc.routes.handler
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
-            [react-test.routes.api-routes :refer [api-routes]]
-            [react-test.routes.resource-routes :refer [resource-routes]]))
+            [bob-poc.routes.api-routes :refer [api-routes]]
+            [bob-poc.routes.resource-routes :refer [resource-routes]]))
 
 (defn wrap-dir-index
   "Middleware to force request for / to return index.html"
