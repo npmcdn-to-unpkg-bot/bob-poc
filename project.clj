@@ -2,6 +2,7 @@
   :description "FIXME: write description"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-time "0.11.0"] ; required due to bug in `lein-ring uberwar`
+                 [org.clojure/core.async "0.2.374"]
                  [metosin/compojure-api "1.1.1"]
                  [ring/ring-jetty-adapter "1.4.0"]
                  [org.clojure/tools.logging "0.3.1"]
