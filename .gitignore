@@ -11,3 +11,5 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 .idea
+/logs/
+bob-poc.iml
