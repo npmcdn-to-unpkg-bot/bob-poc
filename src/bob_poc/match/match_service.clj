@@ -1,17 +1,18 @@
-(ns bob-poc.database.db-service
+(ns bob-poc.match.match-service
   (:require [clj-time.core :as t]
-            [clojure.tools.logging :refer [info error]]))
+            [clojure.tools.logging :refer [info error]])
+  (:import (org.joda.time Interval)))
 
-(def bands (atom [{:id 1 :band-name "Metallica" :facebook "http://facebook.com/metallica"}
+(def ^:private bands (atom [{:id 1 :band-name "Metallica" :facebook "http://facebook.com/metallica"}
                             {:id 2 :band-name "Slipknot" :facebook "http://facebook.com/slipknot"}
                             {:id 3 :band-name "Foo Fighters" :facebook "http://facebook.com/foofighters"}
                             {:id 4 :band-name "Gojira" :facebook "http://facebook.com/gojira"}]))
 
-(def match-duration (t/minutes 2))
+(def ^:private match-duration (t/minutes 2))
 
-(def current-standoff (atom []))
+(def ^:private current-standoff (atom []))
 
-(def next-match-start (atom nil))
+(def ^:private next-match-start (atom nil))
 
 (defn- reset-next-match-start! []
   (info "Resetting next match start!")
@@ -50,6 +51,13 @@
   (if (empty? @current-standoff)
     (start-first-match)
     (start-next-match)))
+
+(defn get-current-match []
+  (let [standoff @current-standoff
+        next-match @next-match-start
+        time-left (.toDurationMillis ^Interval (t/interval (t/now) next-match))
+        match-and-duration {:standoff standoff :time-left time-left}]
+    match-and-duration))
 
 (defn vote! [id]
   (swap! current-standoff #(map (fn [comp] (inc-vote id comp)) %)))

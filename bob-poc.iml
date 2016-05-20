@@ -8,7 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/dev-resources" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -48,6 +48,7 @@
     <orderEntry type="library" name="Leiningen: crypto-random:1.2.0" level="project" />
     <orderEntry type="library" name="Leiningen: de.kotka/lazymap:3.1.0" level="project" />
     <orderEntry type="library" name="Leiningen: frankiesardo/linked:1.2.6" level="project" />
+    <orderEntry type="library" name="Leiningen: fresh:1.1.1" level="project" />
     <orderEntry type="library" name="Leiningen: instaparse:1.4.0" level="project" />
     <orderEntry type="library" name="Leiningen: javax.activation/activation:1.1" level="project" />
     <orderEntry type="library" name="Leiningen: javax.mail/mailapi:1.4.3" level="project" />
@@ -61,6 +62,7 @@
     <orderEntry type="library" name="Leiningen: metosin/ring-swagger:0.22.7" level="project" />
     <orderEntry type="library" name="Leiningen: metosin/schema-tools:0.9.0" level="project" />
     <orderEntry type="library" name="Leiningen: metosin/scjsv:0.2.0" level="project" />
+    <orderEntry type="library" name="Leiningen: mmargs:1.2.0" level="project" />
     <orderEntry type="library" name="Leiningen: net.logstash.logback/logstash-logback-encoder:4.5.1" level="project" />
     <orderEntry type="library" name="Leiningen: net.sf.jopt-simple/jopt-simple:4.6" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/clojure:1.8.0" level="project" />
@@ -94,6 +96,8 @@
     <orderEntry type="library" name="Leiningen: ring/ring-jetty-adapter:1.4.0" level="project" />
     <orderEntry type="library" name="Leiningen: ring/ring-servlet:1.4.0" level="project" />
     <orderEntry type="library" name="Leiningen: slingshot:0.12.2" level="project" />
+    <orderEntry type="library" name="Leiningen: speclj:3.3.0" level="project" />
     <orderEntry type="library" name="Leiningen: tigris:0.1.1" level="project" />
+    <orderEntry type="library" name="Leiningen: trptcolin/versioneer:0.1.1" level="project" />
   </component>
 </module>
