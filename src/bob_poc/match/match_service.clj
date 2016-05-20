@@ -47,6 +47,13 @@
     (update-in band [:votes] inc)
     band))
 
+(defn- calc-match-time-left []
+  (let [now (t/now)
+        next-match @next-match-start]
+    (if (t/before? now next-match)
+      (.toDurationMillis ^Interval (t/interval now next-match))
+      0)))
+
 (defn start-match []
   (if (empty? @current-standoff)
     (start-first-match)
@@ -54,10 +61,8 @@
 
 (defn get-current-match []
   (let [standoff @current-standoff
-        next-match @next-match-start
-        time-left (.toDurationMillis ^Interval (t/interval (t/now) next-match))
-        match-and-duration {:standoff standoff :time-left time-left}]
-    match-and-duration))
+        time-left (calc-match-time-left)]
+    {:standoff standoff :time-left time-left}))
 
 (defn vote! [id]
   (swap! current-standoff #(map (fn [comp] (inc-vote id comp)) %)))
