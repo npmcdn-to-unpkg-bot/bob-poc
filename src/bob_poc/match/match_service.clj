@@ -3,10 +3,10 @@
             [clojure.tools.logging :refer [info error]])
   (:import (org.joda.time Interval)))
 
-(def ^:private full-band-list [{:id 1 :band-name "Metallica" :facebook "http://facebook.com/metallica"}
-                               {:id 2 :band-name "Slipknot" :facebook "http://facebook.com/slipknot"}
-                               {:id 3 :band-name "Foo Fighters" :facebook "http://facebook.com/foofighters"}
-                               {:id 4 :band-name "Gojira" :facebook "http://facebook.com/gojira"}])
+(def ^:private full-band-list [{:id 1 :name "Metallica" :facebook "http://facebook.com/metallica"}
+                               {:id 2 :name "Slipknot" :facebook "http://facebook.com/slipknot"}
+                               {:id 3 :name "Foo Fighters" :facebook "http://facebook.com/foofighters"}
+                               {:id 4 :name "Gojira" :facebook "http://facebook.com/gojira"}])
 
 (def ^:private bands (atom full-band-list))
 
@@ -43,7 +43,6 @@
     (reset-next-match-start! match-duration)))
 
 (defn- inc-vote [id band]
-  (info "Increasing with one vote" id band)
   (if (= id (:id band))
     (update-in band [:votes] inc)
     band))

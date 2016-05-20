@@ -12,4 +12,4 @@
 
     (POST "/vote" {vote :params}
       (debug "Vote received" vote)
-      (ok (match/vote! (:id vote))))))
+      (ok (match/vote! (:bandId vote))))))
