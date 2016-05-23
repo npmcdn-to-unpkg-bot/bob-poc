@@ -1,6 +1,6 @@
 (ns bob-poc.match.match-service
   (:require [clj-time.core :as t]
-            [clojure.tools.logging :refer [info error]])
+            [clojure.tools.logging :refer [info error debug]])
   (:import (org.joda.time Interval)))
 
 (def ^:private full-band-list [{:id 1 :name "Metallica" :facebook "http://facebook.com/metallica"}
@@ -54,15 +54,20 @@
       (.toDurationMillis ^Interval (t/interval now next-match))
       0)))
 
+(defn- compose-current-match-info [current-standoff]
+  {:standoff current-standoff :time-left (calc-match-time-left)})
+
 (defn start-match! [match-duration]
+  (debug "Starting match with duration" (t/in-seconds match-duration) "seconds")
   (if (or (empty? @bands) (empty? @current-standoff))
     (start-first-match! match-duration)
     (start-next-match! match-duration)))
 
 (defn get-current-match []
-  (let [standoff @current-standoff
-        time-left (calc-match-time-left)]
-    {:standoff standoff :time-left time-left}))
+  (debug "Returning current standoff.")
+  (compose-current-match-info @current-standoff))
 
 (defn vote! [id]
-  (swap! current-standoff #(map (fn [band] (inc-vote id band)) %)))
+  (debug "Increasing vote for band with id" id)
+  (let [voted-standoff (swap! current-standoff #(map (fn [band] (inc-vote id band)) %))]
+    (compose-current-match-info voted-standoff)))

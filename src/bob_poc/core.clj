@@ -6,8 +6,7 @@
             [bob-poc.match.match-service :as match]
             [clj-time.core :as t]
             [clojure.core.async :refer :all])
-  (:import [java.lang Runtime Thread]
-           (org.joda.time Seconds)))
+  (:import [java.lang Runtime Thread]))
 
 (def ^:private app-server (atom nil))
 (def ^:private match-loop (atom nil))

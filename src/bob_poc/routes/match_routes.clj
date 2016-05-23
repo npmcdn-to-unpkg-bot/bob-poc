@@ -10,6 +10,7 @@
       (debug "Requesting current match...")
       (ok (match/get-current-match)))
 
-    (POST "/vote" {vote :params}
-      (debug "Vote received" vote)
-      (ok (match/vote! (:bandId vote))))))
+    (POST "/vote" []
+      :form-params [bandId :- Long]
+      (debug "Vote received" bandId)
+      (ok (match/vote! bandId)))))
