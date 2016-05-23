@@ -27,17 +27,17 @@ var VoteForm = React.createClass({
 
 var Band = React.createClass({
     handleVoteSubmit: function(band) {
+        console.log(this.state);
         $.ajax({
             url: '/v1/vote',
             dataType: 'json',
             type: 'POST',
             data: band,
             success: function(data) {
-                this.setState({votes: data});
+                this.setState(data);
             }.bind(this),
             error: function(xhr, status, err) {
-                this.setState({votes: 0});
-                console.error(this.props.url, status, err.toString());
+                console.error('/v1/vote', status, err.toString());
             }.bind(this)
         });
     },
@@ -45,14 +45,17 @@ var Band = React.createClass({
         var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
         return { __html: rawMarkup };
     },
+    getInitialState: function() {
+        return this.props.data;
+    },
     render: function() {
         return (
             <div className="band">
                 <h2 className="bandName">
-                    {this.props.name}
+                    {this.state.name} (Votes {this.state.votes})
                 </h2>
                 <span dangerouslySetInnerHTML={this.rawMarkup()} />
-                <VoteForm bandId={this.props.bandId} onVoteSubmit={this.handleVoteSubmit} />
+                <VoteForm bandId={this.state.id} onVoteSubmit={this.handleVoteSubmit} />
             </div>
         );
     }
@@ -91,13 +94,13 @@ var StandoffBox = React.createClass({
 
 var BandList = React.createClass({
     render: function() {
-        console.log(this.props);
         var propsData = this.props.data.standoff;
+        console.log(propsData)
 
         if (propsData != null) {
             var bandNodes = propsData.map(function(band) {
                 return (
-                    <Band name={band.name} bandId={band.id} key={band.id}>
+                    <Band data={band}>
                         {band.facebook}
                     </Band>
                 );

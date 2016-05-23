@@ -3,10 +3,10 @@
             [clojure.tools.logging :refer [info error debug]])
   (:import (org.joda.time Interval)))
 
-(def ^:private full-band-list [{:id 1 :name "Metallica" :facebook "http://facebook.com/metallica"}
-                               {:id 2 :name "Slipknot" :facebook "http://facebook.com/slipknot"}
-                               {:id 3 :name "Foo Fighters" :facebook "http://facebook.com/foofighters"}
-                               {:id 4 :name "Gojira" :facebook "http://facebook.com/gojira"}])
+(def ^:private full-band-list [{:id 1 :name "Metallica" :facebook "http://facebook.com/metallica" :votes 0}
+                               {:id 2 :name "Slipknot" :facebook "http://facebook.com/slipknot" :votes 0}
+                               {:id 3 :name "Foo Fighters" :facebook "http://facebook.com/foofighters" :votes 0}
+                               {:id 4 :name "Gojira" :facebook "http://facebook.com/gojira" :votes 0}])
 
 (def ^:private bands (atom full-band-list))
 
@@ -29,7 +29,7 @@
   (reset! bands full-band-list)
   (let [first-band (select-band!)
         second-band (select-band!)
-        faceoff [(conj first-band {:votes 0}) (conj second-band {:votes 0})]]
+        faceoff [first-band second-band]]
     (info "Selected bands:" faceoff)
     (reset! current-standoff faceoff)
     (reset-next-match-start! match-duration )))
@@ -37,7 +37,7 @@
 (defn- start-next-match! [match-duration]
   (let [winner (apply max-key :votes @current-standoff)
         competitor (select-band!)
-        faceoff [(conj winner {:votes 0}) (conj competitor {:votes 0})]]
+        faceoff [(assoc winner :votes 0) competitor]]
     (info "Selected bands:" faceoff)
     (reset! current-standoff faceoff)
     (reset-next-match-start! match-duration)))
@@ -54,9 +54,6 @@
       (.toDurationMillis ^Interval (t/interval now next-match))
       0)))
 
-(defn- compose-current-match-info [current-standoff]
-  {:standoff current-standoff :time-left (calc-match-time-left)})
-
 (defn start-match! [match-duration]
   (debug "Starting match with duration" (t/in-seconds match-duration) "seconds")
   (if (or (empty? @bands) (empty? @current-standoff))
@@ -65,9 +62,9 @@
 
 (defn get-current-match []
   (debug "Returning current standoff.")
-  (compose-current-match-info @current-standoff))
+  {:standoff @current-standoff :time-left (calc-match-time-left)})
 
 (defn vote! [id]
   (debug "Increasing vote for band with id" id)
   (let [voted-standoff (swap! current-standoff #(map (fn [band] (inc-vote id band)) %))]
-    (compose-current-match-info voted-standoff)))
+    (first (filter #(= (:id %) id) voted-standoff))))
