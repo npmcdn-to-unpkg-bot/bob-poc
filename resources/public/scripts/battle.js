@@ -7,7 +7,7 @@ var VoteForm = React.createClass({
     render: function() {
         return (
             <form className="voteForm" onSubmit={this.handleSubmit}>
-                <input type="submit" value="VOTE!" />
+                <input type="submit" value="VOTE!" disabled={!this.props.active} />
             </form>
         );
     }
@@ -47,7 +47,7 @@ var Band = React.createClass({
                     {this.state.name} (Votes {this.state.votes})
                 </h2>
                 <span dangerouslySetInnerHTML={this.rawMarkup()} />
-                <VoteForm bandId={this.state.id} onVoteSubmit={this.handleVoteSubmit} />
+                <VoteForm bandId={this.state.id} onVoteSubmit={this.handleVoteSubmit} active={this.props.active} />
             </div>
         );
     }
@@ -58,11 +58,12 @@ var BandList = React.createClass({
         console.log(this.props.data);
         var propsData = this.props.data.standoff;
         var matchNumber = this.props.data.match;
+        var isActive = this.props.active;
 
         if (propsData != null) {
             var bandNodes = propsData.map(function(band) {
                 return (
-                    <Band data={band} key={matchNumber + "-" + band.id}>
+                    <Band data={band} key={matchNumber + "-" + band.id} active={isActive}>
                         {band.facebook}
                     </Band>
                 );
@@ -219,7 +220,7 @@ var StandoffBox = React.createClass({
             cache: false,
             success: function(data) {
                 console.log(data);
-                this.setState({data: data});
+                this.setState({data: data, active: (data.time > 0)});
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -227,21 +228,26 @@ var StandoffBox = React.createClass({
         });
     },
     getInitialState: function() {
-        return {data: {standoff: [], match: 0, time: 0}};
+        return {data: {standoff: [], match: 0, time: 0}, active: false};
     },
     componentDidMount: function() {
         this.loadMatchFromServer();
         setInterval(this.loadMatchFromServer, this.props.pollInterval);
     },
+    inactiveVoting: function() {
+        var newState = this.state;
+        newState.active = false;
+        this.setState(newState);
+    },
     render: function() {
         return (
             <div className="bandBox">
-                <CountdownTimer initialTimeRemaining={this.state.data.time} />
+                <CountdownTimer initialTimeRemaining={this.state.data.time} completeCallback={this.inactiveVoting} />
                 <h1>Bands</h1>
-                <BandList data={this.state.data} />
+                <BandList data={this.state.data} active={this.state.active}/>
             </div>
         );
-        }
+    }
 });
 
 ReactDOM.render(
