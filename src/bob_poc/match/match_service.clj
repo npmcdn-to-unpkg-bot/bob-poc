@@ -8,6 +8,8 @@
                                {:id 3 :name "Foo Fighters" :facebook "http://facebook.com/foofighters" :votes 0}
                                {:id 4 :name "Gojira" :facebook "http://facebook.com/gojira" :votes 0}])
 
+(def ^:private match-number (atom 1))
+
 (def ^:private bands (atom full-band-list))
 
 (def ^:private current-standoff (atom []))
@@ -40,6 +42,7 @@
         faceoff [(assoc winner :votes 0) competitor]]
     (info "Selected bands:" faceoff)
     (reset! current-standoff faceoff)
+    (swap! match-number inc)
     (reset-next-match-start! match-duration)))
 
 (defn- inc-vote [id band]
@@ -62,7 +65,7 @@
 
 (defn get-current-match []
   (debug "Returning current standoff.")
-  {:standoff @current-standoff :time-left (calc-match-time-left)})
+  {:standoff @current-standoff :match @match-number :time-left (calc-match-time-left)})
 
 (defn vote! [id]
   (debug "Increasing vote for band with id" id)

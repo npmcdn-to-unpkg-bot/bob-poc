@@ -1,15 +1,3 @@
-/**
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only. Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
 var VoteForm = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
@@ -27,7 +15,11 @@ var VoteForm = React.createClass({
 
 var Band = React.createClass({
     handleVoteSubmit: function(band) {
-        console.log(this.state);
+        var newState = this.state;
+        newState.votes = newState.votes + 1;
+        this.setState(newState);
+        console.log(newState);
+
         $.ajax({
             url: '/v1/vote',
             dataType: 'json',
@@ -61,6 +53,31 @@ var Band = React.createClass({
     }
 });
 
+var BandList = React.createClass({
+    render: function() {
+        console.log(this.props.data);
+        var propsData = this.props.data.standoff;
+        var matchNumber = this.props.data.match;
+
+        if (propsData != null) {
+            var bandNodes = propsData.map(function(band) {
+                return (
+                    <Band data={band} key={matchNumber + "-" + band.id}>
+                        {band.facebook}
+                    </Band>
+                );
+            });
+            return (
+                <div className="bandList">
+                    {bandNodes}
+                </div>
+            );
+        } else {
+            return null;
+        }
+    }
+});
+
 var StandoffBox = React.createClass({
     loadMatchFromServer: function() {
         $.ajax({
@@ -89,30 +106,6 @@ var StandoffBox = React.createClass({
                 <BandList data={this.state.data} />
             </div>
         );
-    }
-});
-
-var BandList = React.createClass({
-    render: function() {
-        var propsData = this.props.data.standoff;
-        console.log(propsData)
-
-        if (propsData != null) {
-            var bandNodes = propsData.map(function(band) {
-                return (
-                    <Band data={band}>
-                        {band.facebook}
-                    </Band>
-                );
-            });
-            return (
-                <div className="bandList">
-                    {bandNodes}
-                </div>
-            );
-        } else {
-            return null;
-        }
     }
 });
 
