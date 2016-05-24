@@ -1,5 +1,6 @@
 (defproject bob-poc "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+  :description "Proof of consept: Battle of Bands"
+  :min-lein-version "2.5.1"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-time "0.11.0"] ; required due to bug in `lein-ring uberwar`
                  [org.clojure/core.async "0.2.374"]

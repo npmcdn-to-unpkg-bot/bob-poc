@@ -40,6 +40,9 @@ var Band = React.createClass({
     getInitialState: function() {
         return this.props.data;
     },
+    componentWillReceiveProps: function(newProps) {
+        this.setState(newProps.data);
+    },
     render: function() {
         return (
             <div className="band">
