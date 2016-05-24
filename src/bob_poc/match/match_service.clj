@@ -29,12 +29,13 @@
 (defn- start-first-match! [match-duration]
   (info "Starting first match of the week!")
   (reset! bands full-band-list)
+  (reset! match-number 1)
   (let [first-band (select-band!)
         second-band (select-band!)
         faceoff [first-band second-band]]
     (info "Selected bands:" faceoff)
     (reset! current-standoff faceoff)
-    (reset-next-match-start! match-duration )))
+    (reset-next-match-start! match-duration)))
 
 (defn- start-next-match! [match-duration]
   (let [winner (apply max-key :votes @current-standoff)
