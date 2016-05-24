@@ -8,7 +8,8 @@
                  [org.clojure/tools.logging "0.3.1"]
                  [ch.qos.logback/logback-core "1.1.3"]
                  [ch.qos.logback/logback-classic "1.1.3"]
-                 [net.logstash.logback/logstash-logback-encoder "4.5.1"]]
+                 [net.logstash.logback/logstash-logback-encoder "4.5.1"]
+                 [environ "1.0.3"]]
   :ring {:handler bob-poc.routes.handler/app :port 3399 :reload-paths ["src/"]}
   :uberjar-name "server.jar"
   :source-paths ["src/"]

@@ -28,7 +28,7 @@
 
 (defn- start-server! []
   (info "Starting BoB-POC...")
-  (reset! app-server (jetty/run-jetty app {:max-threads 100 :port 3399 :join? false}))
+  (reset! app-server (jetty/run-jetty app {:max-threads 100 :port (Integer/parseInt (System/getenv "PORT")) :join? false}))
   (reset! match-loop (start-match-loop))
   (info "React test started successfully!"))
 
