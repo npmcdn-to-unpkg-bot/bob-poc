@@ -246,7 +246,7 @@ var StandoffBox = React.createClass({
         return (
             <div className="bandBox">
                 <CountdownTimer initialTimeRemaining={this.state.data.time} completeCallback={this.inactiveVoting} />
-                <h1>Bands</h1>
+                <h1>Bands - Round {this.state.data.match}</h1>
                 <BandList data={this.state.data} active={this.state.active}/>
             </div>
         );
