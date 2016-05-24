@@ -65,7 +65,7 @@
 
 (defn get-current-match []
   (debug "Returning current standoff.")
-  {:standoff @current-standoff :match @match-number :time-left (calc-match-time-left)})
+  {:standoff @current-standoff :match @match-number :time (calc-match-time-left)})
 
 (defn vote! [id]
   (debug "Increasing vote for band with id" id)
