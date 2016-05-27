@@ -1,0 +1,45 @@
+{
+  "name": "battleofbands",
+  "version": "1.0.0",
+  "description": "Band's throw off their gloves to see who's who!",
+  "main": "index.js",
+  "scripts": {
+    "production": "webpack -p",
+    "start": "webpack-dev-server",
+    "test": "ava 'app/**/*.test.js' --verbose --require ./other/setup-ava-tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarintom/bob-poc.git"
+  },
+  "keywords": [
+    "battle",
+    "bands",
+    "music",
+    "listen",
+    "upload",
+    "download"
+  ],
+  "author": "Tommi Sarin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarintom/bob-poc/issues"
+  },
+  "homepage": "https://github.com/sarintom/bob-poc#readme",
+  "dependencies": {
+    "react": "^15.1.0",
+    "react-addons-css-transition-group": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-router": "^2.4.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-react": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "html-webpack-plugin": "^2.17.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
