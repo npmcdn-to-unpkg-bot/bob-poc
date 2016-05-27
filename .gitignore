@@ -13,3 +13,5 @@ pom.xml.asc
 .idea
 /logs/
 bob-poc.iml
+/node_modules/
+/resources/
