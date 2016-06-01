@@ -11,12 +11,26 @@
                  [ch.qos.logback/logback-classic "1.1.3"]
                  [net.logstash.logback/logstash-logback-encoder "4.5.1"]
                  [environ "1.0.3"]]
-  :ring {:handler bob-poc.routes.handler/app :port 3399 :reload-paths ["src/"]}
+  :plugins [[lein-ring "0.9.7"]
+            [lein-environ "1.0.3"]
+            [speclj "3.3.1"]]
+  :ring {:init bob-poc.core/init-match-loop!
+         :destroy bob-poc.core/destroy-match-loop!
+         :handler bob-poc.routes.handler/app
+         :port 3399
+         :reload-paths ["src/"]}
   :uberjar-name "server.jar"
   :source-paths ["src/"]
-  :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                                  [speclj "3.3.0"]]
-                   :plugins [[lein-ring "0.9.7"]]}}
-  :plugins [[speclj "3.3.0"]]
+  :resource-paths ["resources/"]
+  :profiles
+  {:dev-server {:env {:environment "dev"}}
+   :dev {:resource-paths ["spec/testfiles/"]
+         :env {:environment "dev-test"}
+         :dependencies [[ring/ring-mock "0.3.0"]
+                        [speclj "3.3.1"]
+                        [speclj-junit "0.0.10"]]}}
+  :aliases {"test" ["with-profile" "dev" "spec" "-f" "d"]
+            "server" ["with-profile" "dev-server" "ring" "server"]
+            "server-headless" ["with-profile" "dev-server" "ring" "server-headless"]}
   :test-paths ["spec"]
   :main bob-poc.core)

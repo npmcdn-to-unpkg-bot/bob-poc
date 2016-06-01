@@ -3,10 +3,10 @@
             [clojure.tools.logging :refer [info error debug]])
   (:import (org.joda.time Interval)))
 
-(def ^:private full-band-list [{:id 1 :name "Metallica" :facebook "http://facebook.com/metallica" :votes 0}
-                               {:id 2 :name "Slipknot" :facebook "http://facebook.com/slipknot" :votes 0}
-                               {:id 3 :name "Foo Fighters" :facebook "http://facebook.com/foofighters" :votes 0}
-                               {:id 4 :name "Gojira" :facebook "http://facebook.com/gojira" :votes 0}])
+(def ^:private full-band-list [{:id 1 :name "Metallica" :bandcamp "http://facebook.com/metallica" :votes 0}
+                               {:id 2 :name "Slipknot" :bandcamp "http://facebook.com/slipknot" :votes 0}
+                               {:id 3 :name "Foo Fighters" :bandcamp "http://facebook.com/foofighters" :votes 0}
+                               {:id 4 :name "Gojira" :bandcamp "http://facebook.com/gojira" :votes 0}])
 
 (def ^:private match-number (atom 1))
 
