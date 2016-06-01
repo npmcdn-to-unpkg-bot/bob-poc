@@ -1,6 +1,7 @@
 var React = require('react');
 var Battle = require('../components/Battle');
 var serverConnector = require('../server/serverConnector');
+var Websocket = require('react-websocket');
 
 var BattleContainer = React.createClass({
 	getInitialState: function () {
@@ -21,9 +22,20 @@ var BattleContainer = React.createClass({
 				})
 			}.bind(this))
 	},
+	handleData: function (data) {
+		this.setState({
+			isLoading: false,
+			match: data.match,
+			standoff: data.standoff
+		})
+	},
 	render: function () {
 		return (
-			<Battle isLoading={this.state.isLoading} match={this.state.match} standoff={this.state.standoff} />
+			<div>
+				<Websocket url='ws://localhost:3399/v1/match-ws'
+						   onMessage={this.handleData}/>
+				<Battle isLoading={this.state.isLoading} match={this.state.match} standoff={this.state.standoff} />
+			</div>
 		)
 	}
 });

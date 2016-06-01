@@ -8,6 +8,7 @@ var MainWrapper = require('./MainWrapper');
 var Loading = require('./Loading');
 
 function Battle (props) {
+	console.log(props);
 	return (
 		props.isLoading === true
 			? 	<Loading />

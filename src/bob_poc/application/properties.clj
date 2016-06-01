@@ -6,6 +6,9 @@
   {:dev
     {:server-port 3399}
 
+   :dev-test
+    {:server-port 3399}
+
    :test
     {:server-port 3399}
 
@@ -35,7 +38,7 @@
 (defn parse-property [key]
   (let [value (get-env-value key)]
     (if (nil? value)
-      (throw (Exception. (str "Value for " key " not given as environment parameter or found from properties file")))
+      (throw (Exception. (str "Value for " key " not given as environment parameter or found from properties file with env " (current-env))))
       value)))
 
 (defn print-properties []

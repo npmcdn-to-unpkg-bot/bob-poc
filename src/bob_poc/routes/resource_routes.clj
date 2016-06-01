@@ -1,7 +1,6 @@
 (ns bob-poc.routes.resource-routes
-  (:require [compojure.api.sweet :refer :all]
-            [compojure.route :refer [resources]]
-            [ring.util.http-response :refer :all]))
+  (:require [compojure.core :refer [defroutes]]
+            [compojure.route :refer [resources]]))
 
 (defroutes resource-routes
   (resources "/"))

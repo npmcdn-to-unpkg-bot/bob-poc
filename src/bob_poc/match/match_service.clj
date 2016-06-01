@@ -1,6 +1,7 @@
 (ns bob-poc.match.match-service
   (:require [clj-time.core :as t]
-            [clojure.tools.logging :refer [info error debug]])
+            [clojure.tools.logging :refer [info error debug]]
+            [bob-poc.match.match-handler :refer [send-new-data-to-clients]])
   (:import (org.joda.time Interval)))
 
 (def ^:private full-band-list [{:id 1 :name "Metallica" :bandcamp "http://facebook.com/metallica" :votes 0}
@@ -62,7 +63,8 @@
   (debug "Starting match with duration" (t/in-seconds match-duration) "seconds")
   (if (or (empty? @bands) (empty? @current-standoff))
     (start-first-match! match-duration)
-    (start-next-match! match-duration)))
+    (start-next-match! match-duration))
+  (send-new-data-to-clients {:standoff @current-standoff :match @match-number :time (calc-match-time-left)}))
 
 (defn get-current-match []
   (debug "Returning current standoff.")

@@ -1,10 +1,10 @@
 (ns bob-poc.routes.handler
-  (:require [compojure.api.sweet :refer :all]
-            [ring.util.http-response :refer :all]
-            [bob-poc.routes.api-routes :refer [api-routes]]
+  (:use compojure.core)
+  (:require [compojure.handler :as handler]
             [bob-poc.routes.resource-routes :refer [resource-routes]]
             [bob-poc.routes.match-routes :refer [match-routes]]
-            [bob-poc.application.properties :refer [current-env]]))
+            [bob-poc.application.properties :refer [current-env]]
+            [ring.middleware.json :refer [wrap-json-response]]))
 
 (defn- wrap-dir-index
   "Middleware to force request for / to return index.html"
@@ -16,7 +16,7 @@
   "Used to allow CORS requests in dev environment because front is running with Webpack in different port"
   [handler]
   (fn [req]
-    (if (= (current-env) "dev")
+    (if (= (current-env) "dev-test")
       (let [response (handler req)]
         (-> response
             (assoc-in [:headers "Access-Control-Allow-Origin"]  "http://localhost:8080")
@@ -24,8 +24,8 @@
             (assoc-in [:headers "Access-Control-Allow-Headers"] "X-Requested-With,Content-Type,Cache-Control")))
       (handler req))))
 
-(defapi app
-  {:api {:invalid-routes-fn nil}
-   :ring-swagger {:ignore-missing-mappings? true}}
-
-  (middleware [wrap-dir-index wrap-dev-cors-support] resource-routes api-routes match-routes))
+(def app
+  (-> (handler/api match-routes)
+      wrap-dir-index
+      wrap-dev-cors-support
+      wrap-json-response))

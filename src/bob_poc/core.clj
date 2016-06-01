@@ -1,12 +1,12 @@
 (ns bob-poc.core
   (:gen-class)
   (:require [clojure.tools.logging :refer [info error]]
-            [ring.adapter.jetty :as jetty]
             [bob-poc.routes.handler :refer [app]]
             [bob-poc.match.match-service :as match]
             [clj-time.core :as t]
             [bob-poc.application.properties :refer :all]
-            [clojure.core.async :refer :all])
+            [clojure.core.async :refer :all]
+            [org.httpkit.server :refer :all])
   (:import [java.lang Runtime Thread]))
 
 (def ^:private app-server (atom nil))
@@ -37,7 +37,7 @@
 
 (defn- start-server! []
   (info "Starting BoB-POC...")
-  (reset! app-server (jetty/run-jetty app {:max-threads 100 :port (parse-property :server-port) :join? false}))
+  (reset! app-server (run-server app {:max-threads 100 :port (parse-property :server-port) :join? false}))
   (init-match-loop!)
   (info "React test started successfully!"))
 
