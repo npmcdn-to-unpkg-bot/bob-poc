@@ -5,7 +5,7 @@
   (:import (org.joda.time Interval)))
 
 (def ^:private full-band-list [{:id 1 :name "Metallica" :soundcloud "https://soundcloud.com/redkaukasus/virago"
-                                :image "http://previews.123rf.com/images/dorian2013/dorian20131509/dorian2013150900041/45913550-Small-planet-with-landmarks-around-the-world-Stock-Photo-world-travel-tour.jpg" :votes 0}
+                                :image "http://previews.123rf.com/images/stockbroker/stockbroker1408/stockbroker140801481/31021178-Male-Owner-Of-Coffee-Shop-Stock-Photo-business.jpg" :votes 0}
                                {:id 2 :name "Slipknot" :soundcloud "https://soundcloud.com/redkaukasus/celebration"
                                 :image "http://previews.123rf.com/images/stockbroker/stockbroker1506/stockbroker150602259/41392692-Two-women-at-a-meeting-in-a-cafe-Stock-Photo-woman-women.jpg" :votes 0}
                                {:id 3 :name "Foo Fighters" :soundcloud "https://soundcloud.com/redkaukasus/flittermice"
