@@ -1,1 +1,1 @@
-web: java -cp target/server.jar clojure.main -m bob-poc.core
+web: lein with-profile heroku trampoline run -m bob-poc.core
