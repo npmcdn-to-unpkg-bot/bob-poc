@@ -4,10 +4,10 @@
             [bob-poc.match.match-handler :refer [send-new-data-to-clients]])
   (:import (org.joda.time Interval)))
 
-(def ^:private full-band-list [{:id 1 :name "Metallica" :bandcamp "http://facebook.com/metallica" :votes 0}
-                               {:id 2 :name "Slipknot" :bandcamp "http://facebook.com/slipknot" :votes 0}
-                               {:id 3 :name "Foo Fighters" :bandcamp "http://facebook.com/foofighters" :votes 0}
-                               {:id 4 :name "Gojira" :bandcamp "http://facebook.com/gojira" :votes 0}])
+(def ^:private full-band-list [{:id 1 :name "Metallica" :soundcloud "https://soundcloud.com/redkaukasus/virago" :image "https://static.pexels.com/photos/42325/rose-red-flower-blossom-42325.jpeg" :votes 0}
+                               {:id 2 :name "Slipknot" :soundcloud "https://soundcloud.com/redkaukasus/celebration" :image "https://static.pexels.com/photos/34048/pexels-photo.jpg" :votes 0}
+                               {:id 3 :name "Foo Fighters" :soundcloud "https://soundcloud.com/redkaukasus/flittermice" :image "https://static.pexels.com/photos/42261/grasshopper-insect-macro-arthropod-42261.jpeg" :votes 0}
+                               {:id 4 :name "Gojira" :soundcloud "https://soundcloud.com/redkaukasus/veil-kite" :image "https://static.pexels.com/photos/105238/pexels-photo-105238.jpeg" :votes 0}])
 
 (def ^:private match-number (atom 1))
 

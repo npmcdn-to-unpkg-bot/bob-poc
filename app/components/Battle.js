@@ -19,8 +19,8 @@ function Battle (props) {
 							return (<BandDetailsWrapper header={band.name} votes={band.votes} key={band.name + '-' + props.match + '-' + band.votes}>
 										<BandDetails
 											bandId={band.id}
-											avatarUrl="https://scontent.xx.fbcdn.net/t31.0-8/12697237_10153297954690264_675506397102150072_o.jpg"
-											soundcloudUrl="https://soundcloud.com/redkaukasus/virago"
+											avatarUrl={band.image}
+											soundcloudUrl={band.soundcloud}
 											hasVoted={props.hasVoted}
 											onVote={props.onVote} />
 									</BandDetailsWrapper>)
