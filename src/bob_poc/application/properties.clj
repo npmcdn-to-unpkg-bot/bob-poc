@@ -10,7 +10,7 @@
     {:server-port 3399}
 
    :test
-    {:server-port 3399}
+    {}
 
    :production
     {:server-port 3399}})

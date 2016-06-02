@@ -28,7 +28,8 @@
   :source-paths ["src/"]
   :resource-paths ["resources/"]
   :profiles
-  {:dev-server {:env {:environment "dev"}}
+  {:heroku {:env {:environment "test"}}
+   :dev-server {:env {:environment "dev"}}
    :dev {:resource-paths ["spec/testfiles/"]
          :env {:environment "dev-test"}
          :dependencies [[ring/ring-mock "0.3.0"]
@@ -36,6 +37,7 @@
                         [speclj-junit "0.0.10"]]}}
   :aliases {"test" ["with-profile" "dev" "spec" "-f" "d"]
             "server" ["with-profile" "dev-server" "ring" "server"]
-            "server-headless" ["with-profile" "dev-server" "ring" "server-headless"]}
+            "server-headless" ["with-profile" "dev-server" "ring" "server-headless"]
+            "start" ["with-profile" "heroku" "run"]}
   :test-paths ["spec"]
   :main bob-poc.core)
