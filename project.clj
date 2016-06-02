@@ -8,6 +8,7 @@
                  [ring/ring-jetty-adapter "1.4.0"]
                  [metosin/ring-http-response "0.6.5"]
                  [ring/ring-json "0.4.0"]
+                 [ring/ring-defaults "0.2.0"]
                  [cheshire "5.6.1"]
                  [org.clojure/tools.logging "0.3.1"]
                  [ch.qos.logback/logback-core "1.1.3"]

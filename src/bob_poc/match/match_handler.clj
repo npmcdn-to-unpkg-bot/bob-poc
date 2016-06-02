@@ -10,10 +10,10 @@
   [req]
   (with-channel req con
                 (swap! clients assoc con true)
-                (println con " connected")
+                (debug con "connected")
                 (on-close con (fn [status]
                                 (swap! clients dissoc con)
-                                (println con " disconnected. status: " status)))))
+                                (debug con "disconnected. status: " status)))))
 
 (defn send-new-data-to-clients [data]
   (doseq [client @clients]

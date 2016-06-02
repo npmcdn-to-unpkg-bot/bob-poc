@@ -18,9 +18,11 @@ function Battle (props) {
 						{props.standoff.map(function (band) {
 							return (<BandDetailsWrapper header={band.name} votes={band.votes} key={band.name + '-' + props.match + '-' + band.votes}>
 										<BandDetails
-											band_id={band.id}
-											avatar_url="https://scontent.xx.fbcdn.net/t31.0-8/12697237_10153297954690264_675506397102150072_o.jpg"
-											soundcloud_url="https://soundcloud.com/redkaukasus/virago" />
+											bandId={band.id}
+											avatarUrl="https://scontent.xx.fbcdn.net/t31.0-8/12697237_10153297954690264_675506397102150072_o.jpg"
+											soundcloudUrl="https://soundcloud.com/redkaukasus/virago"
+											hasVoted={props.hasVoted}
+											onVote={props.onVote} />
 									</BandDetailsWrapper>)
 						})}
 					</div>

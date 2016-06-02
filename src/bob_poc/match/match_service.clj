@@ -59,18 +59,22 @@
       (.toDurationMillis ^Interval (t/interval now next-match))
       0)))
 
+(defn- create-server-data []
+  {:standoff @current-standoff :match @match-number :time (calc-match-time-left)})
+
 (defn start-match! [match-duration]
   (debug "Starting match with duration" (t/in-seconds match-duration) "seconds")
   (if (or (empty? @bands) (empty? @current-standoff))
     (start-first-match! match-duration)
     (start-next-match! match-duration))
-  (send-new-data-to-clients {:standoff @current-standoff :match @match-number :time (calc-match-time-left)}))
+  (send-new-data-to-clients (create-server-data)))
 
 (defn get-current-match []
   (debug "Returning current standoff.")
-  {:standoff @current-standoff :match @match-number :time (calc-match-time-left)})
+  (create-server-data))
 
 (defn vote! [id]
   (debug "Increasing vote for band with id" id)
   (let [voted-standoff (swap! current-standoff #(map (fn [band] (inc-vote id band)) %))]
+    (send-new-data-to-clients (create-server-data))
     (first (filter #(= (:id %) id) voted-standoff))))

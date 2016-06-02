@@ -11,4 +11,7 @@
 
     (GET "/current-match" []
       (debug "Requesting current match...")
-      (ok (match/get-current-match)))))
+      (ok (match/get-current-match)))
+
+    (POST "/vote" {{id :id} :body}
+      (ok (match/vote! id)))))

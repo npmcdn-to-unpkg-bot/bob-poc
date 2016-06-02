@@ -4,7 +4,7 @@
             [bob-poc.routes.resource-routes :refer [resource-routes]]
             [bob-poc.routes.match-routes :refer [match-routes]]
             [bob-poc.application.properties :refer [current-env]]
-            [ring.middleware.json :refer [wrap-json-response]]))
+            [ring.middleware.json :refer [wrap-json-response wrap-json-body]]))
 
 (defn- wrap-dir-index
   "Middleware to force request for / to return index.html"
@@ -28,4 +28,5 @@
   (-> (handler/api match-routes)
       wrap-dir-index
       wrap-dev-cors-support
+      (wrap-json-body {:keywords? true})
       wrap-json-response))
