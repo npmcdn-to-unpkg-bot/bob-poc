@@ -1,5 +1,6 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
+var Player = require('./Player');
 
 function BandImage (props) {
   var styles = {
@@ -20,12 +21,6 @@ var BandDetails = React.createClass({
     avatarUrl: PropTypes.string.isRequired,
     soundcloudUrl: PropTypes.string.isRequired
   },
-  componentDidMount: function() {
-    SC.oEmbed(this.props.soundcloudUrl, {
-      maxHeight: "100",
-      element: document.getElementById('soundCloudDiv' + this.props.bandId)
-    });
-  },
   render: function () {
     return (
       <div>
@@ -35,7 +30,7 @@ var BandDetails = React.createClass({
                      avatarUrl={this.props.avatarUrl}
                      bandId={this.props.bandId} />
         </li>
-        <li className="list-group-item"><div id={"soundCloudDiv" + this.props.bandId}></div></li>
+        <li className="list-group-item"><Player bandId={this.props.bandId} soundcloudUrl={this.props.soundcloudUrl} /></li>
       </div>
     )
   }

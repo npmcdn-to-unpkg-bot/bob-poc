@@ -13,6 +13,7 @@ var BattleContainer = React.createClass({
 		}
 	},
 	componentDidMount: function () {
+		console.log("battlecontainer");
 		serverConnector.getBattleInfo()
 			.then(function (battle) {
 				this.setState({
