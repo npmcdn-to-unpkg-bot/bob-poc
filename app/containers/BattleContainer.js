@@ -13,7 +13,6 @@ var BattleContainer = React.createClass({
 		}
 	},
 	componentDidMount: function () {
-		console.log("component mounted");
 		serverConnector.getBattleInfo()
 			.then(function (battle) {
 				this.setState({
@@ -25,7 +24,6 @@ var BattleContainer = React.createClass({
 			}.bind(this))
 	},
 	handleServerData: function (battle) {
-		console.log("handling server data");
 		this.setState({
 			isLoading: false,
 			match: battle.match,
@@ -34,7 +32,23 @@ var BattleContainer = React.createClass({
 		})
 	},
 	handleVote: function (bandId) {
-		console.log("Voting for band " + bandId);
+		// Optimistically update votes so ui renders faster
+		var currentStandoff = this.state.standoff;
+		var updatedStandoff = currentStandoff.map(function (band) {
+			if (band.id === bandId) {
+				band.votes = band.votes + 1;
+			}
+
+			return band;
+		});
+
+		this.setState({
+			isLoading: false,
+			match: this.state.match,
+			standoff: updatedStandoff,
+			voted: this.state.voted
+
+		});
 		serverConnector.reportVote(bandId);
 	},
 	render: function () {
