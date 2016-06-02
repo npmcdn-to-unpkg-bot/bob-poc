@@ -55,7 +55,7 @@ var BattleContainer = React.createClass({
 	render: function () {
 		return (
 			<div>
-				<Websocket url='ws://localhost/v1/match-ws'
+				<Websocket url='ws://bob-poc.herokuapp.com/v1/match-ws'
 						   onMessage={this.handleServerData}/>
 				<Battle isLoading={this.state.isLoading}
 						match={this.state.match}
