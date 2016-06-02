@@ -3,9 +3,11 @@
             [clojure.tools.logging :refer [debug]]
             [bob-poc.match.match-service :as match]
             [ring.util.http-response :refer [ok]]
-            [bob-poc.match.match-handler :refer [match-ws-handler]]))
+            [bob-poc.match.match-handler :refer [match-ws-handler]]
+            [compojure.route :refer [resources]]))
 
 (defroutes match-routes
+  (resources "/")
   (context "/v1" []
     (GET "/match-ws" [] match-ws-handler)
 

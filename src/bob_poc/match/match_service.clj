@@ -4,10 +4,14 @@
             [bob-poc.match.match-handler :refer [send-new-data-to-clients]])
   (:import (org.joda.time Interval)))
 
-(def ^:private full-band-list [{:id 1 :name "Metallica" :soundcloud "https://soundcloud.com/redkaukasus/virago" :image "https://static.pexels.com/photos/42325/rose-red-flower-blossom-42325.jpeg" :votes 0}
-                               {:id 2 :name "Slipknot" :soundcloud "https://soundcloud.com/redkaukasus/celebration" :image "https://static.pexels.com/photos/34048/pexels-photo.jpg" :votes 0}
-                               {:id 3 :name "Foo Fighters" :soundcloud "https://soundcloud.com/redkaukasus/flittermice" :image "https://static.pexels.com/photos/42261/grasshopper-insect-macro-arthropod-42261.jpeg" :votes 0}
-                               {:id 4 :name "Gojira" :soundcloud "https://soundcloud.com/redkaukasus/veil-kite" :image "https://static.pexels.com/photos/105238/pexels-photo-105238.jpeg" :votes 0}])
+(def ^:private full-band-list [{:id 1 :name "Metallica" :soundcloud "https://soundcloud.com/redkaukasus/virago"
+                                :image "http://previews.123rf.com/images/dorian2013/dorian20131509/dorian2013150900041/45913550-Small-planet-with-landmarks-around-the-world-Stock-Photo-world-travel-tour.jpg" :votes 0}
+                               {:id 2 :name "Slipknot" :soundcloud "https://soundcloud.com/redkaukasus/celebration"
+                                :image "http://previews.123rf.com/images/stockbroker/stockbroker1506/stockbroker150602259/41392692-Two-women-at-a-meeting-in-a-cafe-Stock-Photo-woman-women.jpg" :votes 0}
+                               {:id 3 :name "Foo Fighters" :soundcloud "https://soundcloud.com/redkaukasus/flittermice"
+                                :image "http://previews.123rf.com/images/iriana88w/iriana88w1409/iriana88w140900648/31574495-Small-grey-house-with-wooden-deck-Front-yard-with-flower-bed-and-lawn-Stock-Photo.jpg" :votes 0}
+                               {:id 4 :name "Gojira" :soundcloud "https://soundcloud.com/redkaukasus/veil-kite"
+                                :image "http://previews.123rf.com/images/stevanovicigor/stevanovicigor1511/stevanovicigor151100184/48597849-Real-estate-mortgage-concept-with-small-plastic-house-models-on-top-of-stacked-coins--Stock-Photo.jpg" :votes 0}])
 
 (def ^:private match-number (atom 1))
 
