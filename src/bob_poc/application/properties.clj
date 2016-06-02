@@ -4,16 +4,16 @@
 
 (def properties
   {:dev
-    {:server-port 3399}
+    {:port 3399}
 
    :dev-test
-    {:server-port 3399}
+    {:port 3399}
 
    :test
     {}
 
    :production
-    {:server-port 3399}})
+    {:port 3399}})
 
 ;Note that Environ automatically lowercases keys, and replaces the characters "_" and "." with "-".
 (defn- keyword-to-sysenv-variable [key]
