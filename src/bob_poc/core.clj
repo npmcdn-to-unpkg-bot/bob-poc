@@ -37,7 +37,7 @@
 
 (defn- start-server! []
   (info "Starting BoB-POC...")
-  (reset! app-server (run-server app {:max-threads 100 :port (parse-property :port) :join? false}))
+  (reset! app-server (run-server app {:max-threads 100 :port (parse-property :server-port) :join? false}))
   (init-match-loop!)
   (info "React test started successfully!"))
 

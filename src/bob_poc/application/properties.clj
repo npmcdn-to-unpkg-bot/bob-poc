@@ -4,16 +4,16 @@
 
 (def properties
   {:dev
-    {:port 3399}
+    {:server-port 3399}
 
    :dev-test
-    {:port 3399}
+    {:server-port 3399}
 
    :test
-    {}
+    {:server-port (Integer. (System/getenv "PORT"))}
 
    :production
-    {:port 3399}})
+    {:server-port 3399}})
 
 ;Note that Environ automatically lowercases keys, and replaces the characters "_" and "." with "-".
 (defn- keyword-to-sysenv-variable [key]
