@@ -2,18 +2,20 @@
   (:use [environ.core :only [env]]
         [clojure.tools.logging :only [info]]))
 
+(def server-port (Integer. (or (System/getenv "PORT") "3399")))
+
 (def properties
   {:dev
-    {:server-port 3399}
+    {:server-port server-port}
 
    :dev-test
-    {:server-port 3399}
+    {:server-port server-port}
 
    :test
-    {:server-port (Integer. (or (System/getenv "PORT") "8080"))}
+    {:server-port server-port}
 
    :production
-    {:server-port 3399}})
+    {:server-port server-port}})
 
 ;Note that Environ automatically lowercases keys, and replaces the characters "_" and "." with "-".
 (defn- keyword-to-sysenv-variable [key]

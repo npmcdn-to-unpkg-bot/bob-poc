@@ -24,6 +24,7 @@
          :handler bob-poc.routes.handler/app
          :port 3399
          :reload-paths ["src/"]}
+  :uberjar-name "server.jar"
   :source-paths ["src/"]
   :resource-paths ["resources/"]
   :profiles
