@@ -10,7 +10,7 @@
     {:server-port 3399}
 
    :test
-    {:server-port (Integer. (System/getenv "PORT"))}
+    {:server-port (Integer. (or (System/getenv "PORT") "8080"))}
 
    :production
     {:server-port 3399}})
