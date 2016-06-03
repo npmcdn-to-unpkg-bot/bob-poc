@@ -6,16 +6,14 @@
 
 (def clients (atom {}))
 
-(defn match-ws-handler
-  [req]
+(defn match-ws-handler [req]
   (with-channel req con
-                (swap! clients assoc con true)
-                (debug con "connected")
-                (on-close con (fn [status]
-                                (swap! clients dissoc con)
-                                (debug con "disconnected. status: " status)))))
+    (swap! clients assoc con true)
+    (debug con "connected")
+    (on-close con (fn [status]
+                    (swap! clients dissoc con)
+                    (debug con "disconnected. status: " status)))))
 
 (defn send-new-data-to-clients [data]
   (doseq [client @clients]
-    (send! (key client) (generate-string data)
-           false)))
+    (send! (key client) (generate-string data) false)))

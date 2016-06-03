@@ -13,13 +13,16 @@
                                {:id 4 :name "Gojira" :soundcloud "https://soundcloud.com/redkaukasus/veil-kite"
                                 :image "http://previews.123rf.com/images/stevanovicigor/stevanovicigor1511/stevanovicigor151100184/48597849-Real-estate-mortgage-concept-with-small-plastic-house-models-on-top-of-stacked-coins--Stock-Photo.jpg" :votes 0}])
 
-(def ^:private match-number (atom 1))
-
+(def ^:private match-number (atom 0))
 (def ^:private bands (atom full-band-list))
-
 (def ^:private current-standoff (atom []))
-
 (def ^:private next-match-start (atom nil))
+
+(defn reset-all-data! []
+  (reset! match-number 0)
+  (reset! bands full-band-list)
+  (reset! current-standoff [])
+  (reset! next-match-start nil))
 
 (defn- reset-next-match-start! [match-duration]
   (info "Resetting next match start!")
@@ -59,7 +62,7 @@
 (defn- calc-match-time-left []
   (let [now (t/now)
         next-match @next-match-start]
-    (if (t/before? now next-match)
+    (if (and next-match (t/before? now next-match))
       (.toDurationMillis ^Interval (t/interval now next-match))
       0)))
 
