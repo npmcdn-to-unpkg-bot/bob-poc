@@ -4,7 +4,7 @@
   "description": "Band's throw off their gloves to see who's who!",
   "main": "index.js",
   "scripts": {
-    "production": "webpack -p",
+    "production": "webpack -p --define process.env.NODE_ENV='\"production\"'",
     "start": "webpack-dev-server",
     "test": "ava 'app/**/*.test.js' --verbose --require ./other/setup-ava-tests.js"
   },

@@ -2,6 +2,7 @@ var React = require('react');
 var Battle = require('../components/Battle');
 var serverConnector = require('../server/serverConnector');
 var Websocket = require('react-websocket');
+var serverConfig = require('../config/server');
 
 var BattleContainer = React.createClass({
 	getInitialState: function () {
@@ -55,7 +56,7 @@ var BattleContainer = React.createClass({
 	render: function () {
 		return (
 			<div>
-				<Websocket url='ws://bob-poc.herokuapp.com/v1/match-ws'
+				<Websocket url={'ws://' + serverConfig + '/v1/match-ws'}
 						   onMessage={this.handleServerData}/>
 				<Battle isLoading={this.state.isLoading}
 						match={this.state.match}
