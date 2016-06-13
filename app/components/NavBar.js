@@ -1,7 +1,24 @@
 var React = require('react');
+var serverConfig = require('../config/server').frontEndConfig;
+var SC = require('soundcloud');
 
-function NavBar (props) {
-	return (
+var NavBar = React.createClass({
+	handleClick: function() {
+		console.log("Clicked!");
+		console.log(serverConfig);
+		SC.initialize({
+			client_id: 'f372d41f0b8cd51c53240982350ab4fb',
+			redirect_uri: 'http://' + serverConfig + '/callback.html'
+		});
+
+		// initiate auth popup
+		SC.connect().then(function() {
+			return SC.get('/me');
+		}).then(function(me) {
+			console.log('Hello, ' + me.username);
+		});
+	},
+	render: function () {return (
 		<nav className="navbar navbar-default">
 		  <div className="container-fluid">
 		    <div classNameName="navbar-header">
@@ -32,11 +49,13 @@ function NavBar (props) {
 		        </li>
 		      </ul>
 		      <ul className="nav navbar-nav navbar-right">
-		        <li><button type="button" className="btn btn-default navbar-btn">Sign in</button></li>
+		        <li>
+					<button type="button" className="btn btn-default navbar-btn" onClick={this.handleClick}>Sign in</button>
+				</li>
 		      </ul>
 		    </div>
 		  </div>
-		</nav>)
-}
+		</nav>)}
+});
 
 module.exports = NavBar;

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "production": "webpack -p --define process.env.NODE_ENV='\"production\"'",
-    "start": "webpack-dev-server",
+    "dev": "webpack -p",
+    "start": "webpack-dev-server --content-base app/",
     "test": "ava 'app/**/*.test.js' --verbose --require ./other/setup-ava-tests.js"
   },
   "repository": {
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/sarintom/bob-poc#readme",
   "dependencies": {
     "axios": "^0.12.0",
+    "history": "^3.0.0",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.1.0",

@@ -1,6 +1,10 @@
-var testServerConfig = 'localhost:3399';
+var devBackendPort = '3399';
+var devFrontendPort = '8080';
+
+var devServerConfig = 'localhost:';
 var prodServerConfig = 'bob-poc.herokuapp.com';
 
-var envConfig = process.env.NODE_ENV === "production" ? prodServerConfig : testServerConfig;
-
-module.exports = envConfig;
+module.exports = {
+    frontEndConfig: devServerConfig + devFrontendPort,
+    backEndConfig: process.env.NODE_ENV === "production" ? prodServerConfig : devServerConfig + devBackendPort
+};

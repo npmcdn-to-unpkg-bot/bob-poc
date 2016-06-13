@@ -1,5 +1,5 @@
 var axios = require('axios');
-var serverConfig = require('../config/server');
+var serverConfig = require('../config/server').backEndConfig;
 
 var helpers = {
     getBattleInfo: function () {

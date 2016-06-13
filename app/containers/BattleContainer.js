@@ -2,7 +2,7 @@ var React = require('react');
 var Battle = require('../components/Battle');
 var serverConnector = require('../server/serverConnector');
 var Websocket = require('react-websocket');
-var serverConfig = require('../config/server');
+var serverConfig = require('../config/server').backEndConfig;
 
 var BattleContainer = React.createClass({
 	getInitialState: function () {
