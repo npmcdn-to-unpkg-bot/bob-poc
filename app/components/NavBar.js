@@ -24,8 +24,10 @@ function RightSideNav (props) {
 			imageAlt: "Login with SoundCloud"
 		};
 
-	var loggedInAs = props.isConnected ? <li><a href={props.userUrl}>Logged in as {props.loggedInAs}</a></li> : null;
-	var loggedUserLinks = props.isConnected ? <li><Link to="/uploadSong"><button type="button" className="btn btn-sm btn-success">Upload a song</button></Link></li> : null;
+	console.log(props.loggedUser);
+
+	var loggedInAs = props.isConnected ? <li><a href={props.loggedUser.permalink_url}>Logged in as {props.loggedUser.username}</a></li> : null;
+	var loggedUserLinks = props.isConnected ? <li><Link to={{ pathname: '/uploadSong/' + props.loggedUser.id }}><button type="button" className="btn btn-sm btn-success">Upload a song</button></Link></li> : null;
 
 	return (
 			<ul className="nav navbar-nav navbar-right">
@@ -58,8 +60,7 @@ function NavBarWrapper (props) {
 					<RightSideNav isConnected={props.isConnected}
 								  handleLoginClick={props.handleLoginClick}
 								  handleLogoutClick={props.handleLogoutClick}
-								  loggedInAs={props.loggedInAs}
-								  userUrl={props.userUrl} />
+								  loggedUser={props.loggedUser} />
 				</div>
 			</div>
 		</nav>
@@ -70,8 +71,7 @@ var NavBar = React.createClass({
 	getInitialState: function () {
 		return {
 			isLoggedIn: false,
-			loggedInAs: null,
-			userUrl: null
+			loggedUser: null
 		}
 	},
 	connectToSoundCloud: function() {
@@ -82,8 +82,7 @@ var NavBar = React.createClass({
 			console.log("Logged in " + me.username);
 			this.setState({
 				isLoggedIn: true,
-				loggedInAs: me.username,
-				userUrl: me.permalink_url
+				loggedUser: me
 			});
 		}.bind(this));
 	},
@@ -91,8 +90,7 @@ var NavBar = React.createClass({
 		sessionStorage.clear();
 		this.setState({
 			isLoggedIn: false,
-			loggedInAs: null,
-			userUrl: null
+			loggedUser: null
 		});
 	},
 	componentDidMount: function() {
@@ -106,8 +104,7 @@ var NavBar = React.createClass({
 			<NavBarWrapper isConnected={this.state.isLoggedIn}
 						   handleLoginClick={this.connectToSoundCloud}
 						   handleLogoutClick={this.disconnectFromSoundCloud}
-						   loggedInAs={this.state.loggedInAs}
-						   userUrl={this.state.userUrl} />
+						   loggedUser={this.state.loggedUser}  />
 			)}
 });
 
