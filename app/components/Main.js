@@ -7,11 +7,11 @@ var Main = React.createClass({
 	render: function() {
 		return (
 			<div className='main-container'>
-				<NavBar />
 				<ReactCSSTransitionGroup
 					transitionName="appear"
 					transitionEnterTimeout={500}
 					transitionLeaveTimeout={500}>
+						<NavBar key="nav-bar-key"/>
 						{React.cloneElement(this.props.children, {key: this.props.location.pathname})}
 				</ReactCSSTransitionGroup>
 			</div>
