@@ -1,9 +1,7 @@
 var React = require('react');
-var PropTypes = React.PropTypes;
 var styles = require('../styles');
 var BandDetails = require('./BandDetails');
 var BandDetailsWrapper = require('./BandDetailsWrapper');
-var Link = require('react-router').Link;
 var MainWrapper = require('./MainWrapper');
 var Loading = require('./Loading');
 
