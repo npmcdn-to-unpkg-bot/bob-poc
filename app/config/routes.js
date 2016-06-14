@@ -7,12 +7,13 @@ var browserHistory = ReactRouter.browserHistory;
 var hashHistory = ReactRouter.hashHistory;
 var Main = require('../components/Main');
 var BattleContainer = require('../containers/BattleContainer');
-var BandUploadContainer = require('../containers/BandUploadContainer');
+var BandUpload = require('../components/BandUpload');
 
 var routes = (
 	<Router history={browserHistory}>
 		<Route path="/" component={Main}>
 			<IndexRoute component={BattleContainer} />
+			<Route path="/uploadSong" component={BandUpload} />
 		</Route>
 	</Router>
 );

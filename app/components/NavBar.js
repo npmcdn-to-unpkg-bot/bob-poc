@@ -1,13 +1,12 @@
 var React = require('react');
 var serverConfig = require('../config/server').frontEndConfig;
 var SC = require('soundcloud');
+var Link = require('react-router').Link;
 
 function LeftSideNav (props) {
-	var loggedUserLinks = props.isConnected ? <li><a href="#">Upload a song</a></li> : null;
 	return (
 		<ul className="nav navbar-nav">
 			<li className="active"><a href="#">Home <span className="sr-only">(current)</span></a></li>
-			{loggedUserLinks}
 		</ul>
 	)
 }
@@ -26,10 +25,12 @@ function RightSideNav (props) {
 		};
 
 	var loggedInAs = props.isConnected ? <li><a href={props.userUrl}>Logged in as {props.loggedInAs}</a></li> : null;
+	var loggedUserLinks = props.isConnected ? <li><Link to="/uploadSong"><button type="button" className="btn btn-sm btn-success">Upload a song</button></Link></li> : null;
 
 	return (
 			<ul className="nav navbar-nav navbar-right">
 				{loggedInAs}
+				{loggedUserLinks}
 				<li>
 					<a href="#" onClick={soundCloudButtonProps.clickHandler}>
 						<img src={soundCloudButtonProps.imageSrc} alt={soundCloudButtonProps.imageAlt} />
@@ -53,7 +54,7 @@ function NavBarWrapper (props) {
 					<a className="navbar-brand" href="#">Battle of the Bands</a>
 				</div>
 				<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<LeftSideNav isConnected={props.isConnected} />
+					<LeftSideNav />
 					<RightSideNav isConnected={props.isConnected}
 								  handleLoginClick={props.handleLoginClick}
 								  handleLogoutClick={props.handleLogoutClick}
