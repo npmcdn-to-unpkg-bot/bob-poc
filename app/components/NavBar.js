@@ -10,7 +10,7 @@ function LeftSideNav (props) {
 			{loggedUserLinks}
 		</ul>
 	)
-};
+}
 
 function RightSideNav (props) {
 	var soundCloudButtonProps = props.isConnected ?
@@ -37,7 +37,33 @@ function RightSideNav (props) {
 				</li>
 			</ul>
 	)
-};
+}
+
+function NavBarWrapper (props) {
+	return (
+		<nav className="navbar navbar-default">
+			<div className="container-fluid">
+				<div classNameName="navbar-header">
+					<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span className="sr-only">Toggle navigation</span>
+						<span className="icon-bar"></span>
+						<span className="icon-bar"></span>
+						<span className="icon-bar"></span>
+					</button>
+					<a className="navbar-brand" href="#">Battle of the Bands</a>
+				</div>
+				<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<LeftSideNav isConnected={props.isConnected} />
+					<RightSideNav isConnected={props.isConnected}
+								  handleLoginClick={props.handleLoginClick}
+								  handleLogoutClick={props.handleLogoutClick}
+								  loggedInAs={props.loggedInAs}
+								  userUrl={props.userUrl} />
+				</div>
+			</div>
+		</nav>
+	)
+}
 
 var NavBar = React.createClass({
 	getInitialState: function () {
@@ -53,7 +79,6 @@ var NavBar = React.createClass({
 			return SC.get('/me');
 		}).then(function(me) {
 			console.log("Logged in " + me.username);
-			console.log(me);
 			this.setState({
 				isLoggedIn: true,
 				loggedInAs: me.username,
@@ -77,27 +102,12 @@ var NavBar = React.createClass({
 	},
 	render: function () {
 		return (
-			<nav className="navbar navbar-default">
-				<div className="container-fluid">
-					<div classNameName="navbar-header">
-						                     <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						                       <span className="sr-only">Toggle navigation</span>
-						                       <span className="icon-bar"></span>
-						                       <span className="icon-bar"></span>
-						                       <span className="icon-bar"></span>
-						                     </button>
-						                     <a className="navbar-brand" href="#">Battle of the Bands</a>
-						                   </div>
-					<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<LeftSideNav isConnected={this.state.isLoggedIn} />
-					<RightSideNav isConnected={this.state.isLoggedIn}
-								  handleLoginClick={this.connectToSoundCloud}
-								  handleLogoutClick={this.disconnectFromSoundCloud}
-								  loggedInAs={this.state.loggedInAs}
-								  userUrl={this.state.userUrl} />
-				</div>
-					</div>
-			</nav>)}
+			<NavBarWrapper isConnected={this.state.isLoggedIn}
+						   handleLoginClick={this.connectToSoundCloud}
+						   handleLogoutClick={this.disconnectFromSoundCloud}
+						   loggedInAs={this.state.loggedInAs}
+						   userUrl={this.state.userUrl} />
+			)}
 });
 
 module.exports = NavBar;
