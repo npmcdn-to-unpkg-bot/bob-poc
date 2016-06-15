@@ -13,7 +13,7 @@ var routes = (
 	<Router history={browserHistory}>
 		<Route path="/" component={Main}>
 			<IndexRoute component={BattleContainer} />
-			<Route path="uploadSong/:bandId" component={BandUpload} />
+			<Route path="uploadSong" component={BandUpload} />
 		</Route>
 	</Router>
 );

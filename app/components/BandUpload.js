@@ -6,10 +6,12 @@ var MainWrapper = require('./MainWrapper');
 var styles = require('../styles');
 var Modal = require('react-bootstrap').Modal;
 var Button = require('react-bootstrap').Button;
+var serverConnector = require('../server/serverConnector');
 
 var Submit = function (props) {
-    var options = props.songs.map(function (song) {
-        return {value: song.id, label: song.title};
+    var options = props.songs.filter(props.filterResults).map(function (song) {
+        console.log(song);
+        return {value: song.permalink, label: song.title};
     });
 
     var divStyle = {
@@ -57,7 +59,8 @@ var BandUpload = React.createClass({
         })
     },
     componentDidMount: function () {
-        SC.get('/users/' + this.props.routeParams.bandId + '/tracks').then(function (tracks) {
+        SC.get('/users/' + this.props.location.query.bandId + '/tracks').then(function (tracks) {
+            console.log(tracks);
             this.setState({
                 songs: tracks,
                 isLoading: false,
@@ -75,12 +78,17 @@ var BandUpload = React.createClass({
         e.preventDefault();
 
         if (this.state.selectValue !== null) {
-            var song = this.state.selectValue;
-            console.log("sending..." + song);
+            SC.get('/me').then(function (band) {
+                var streamUrl = band.permalink_url + "/" + this.state.selectValue;
+                var bandName = band.username;
+                var bandImage = band.avatar_url.replace(new RegExp('large.jpg$'), 't500x500.jpg');
 
-            var currState = this.state;
-            currState.songSubmitted = true;
-            this.setState(currState);
+                serverConnector.postSong(bandName, bandImage, streamUrl);
+
+                var currState = this.state;
+                currState.songSubmitted = true;
+                this.setState(currState);
+            }.bind(this));
         }
     },
     close: function () {
@@ -90,18 +98,22 @@ var BandUpload = React.createClass({
 
         this.context.router.push({ pathname: '/' });
     },
+    filterResults: function (song) {
+      return song.sharing !== "private"
+    },
     render: function () {
         var mainDiv = this.state.isLoading ? <Loading /> : <Submit songSubmitted={this.state.songSubmitted}
                                                                    songs={this.state.songs}
                                                                    selectValue={this.state.selectValue}
                                                                    handleSubmit={this.sendSongToServer}
-                                                                   handleChange={this.handleChange} />;
+                                                                   handleChange={this.handleChange}
+                                                                   filterResults = {this.filterResults} />;
         return (
             <div>
                 {mainDiv}
                 <Modal show={this.state.songSubmitted} onHide={this.close}>
                     <Modal.Body>
-                        <h4>Song submitted succesfully!</h4>
+                        <h4>Song submitted successfully!</h4>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.close}>OK</Button>

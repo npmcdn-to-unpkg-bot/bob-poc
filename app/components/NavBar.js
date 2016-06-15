@@ -27,7 +27,7 @@ function RightSideNav (props) {
 	console.log(props.loggedUser);
 
 	var loggedInAs = props.isConnected ? <li><a href={props.loggedUser.permalink_url}>Logged in as {props.loggedUser.username}</a></li> : null;
-	var loggedUserLinks = props.isConnected ? <li><Link to={{ pathname: '/uploadSong/' + props.loggedUser.id }}><button type="button" className="btn btn-sm btn-success">Upload a song</button></Link></li> : null;
+	var loggedUserLinks = props.isConnected ? <li><Link to={{ pathname: '/uploadSong',  query: {bandId: props.loggedUser.id} }}><button type="button" className="btn btn-sm btn-success">Upload a song</button></Link></li> : null;
 
 	return (
 			<ul className="nav navbar-nav navbar-right">
