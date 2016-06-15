@@ -6,7 +6,6 @@ var MainWrapper = require('./MainWrapper');
 var Loading = require('./Loading');
 
 function Battle (props) {
-	console.log(props);
 	return (
 		props.isLoading === true
 			? 	<Loading />
@@ -24,6 +23,7 @@ function Battle (props) {
 									</BandDetailsWrapper>)
 						})}
 					</div>
+					<div className='col-sm-8 col-sm-offset-2'></div>
 				</MainWrapper>
 	)
 }
