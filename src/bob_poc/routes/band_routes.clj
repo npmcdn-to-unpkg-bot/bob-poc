@@ -4,7 +4,8 @@
             [bob-poc.match.match-service :as match]
             [ring.util.http-response :refer [ok]]
             [bob-poc.match.match-handler :refer [match-ws-handler]]
-            [compojure.route :refer [resources]]))
+            [compojure.route :refer [resources]]
+            [bob-poc.application.data :as data]))
 
 (defroutes band-routes
    (resources "/")
@@ -13,6 +14,6 @@
        (debug "Requesting how many contendees...")
        (ok (match/get-current-match)))
 
-     (POST "/song" {{bandName :name bandImage :img streamUrl :url} :body}
-       (debug (str bandName " " bandImage " " streamUrl))
-       )))
+     (POST "/song" {{band-name :name band-image :img stream-url :url} :body}
+       (debug "TEst")
+       (ok (data/add-new-song! band-name band-image stream-url)))))

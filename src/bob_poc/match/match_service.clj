@@ -1,26 +1,18 @@
 (ns bob-poc.match.match-service
   (:require [clj-time.core :as t]
             [clojure.tools.logging :refer [info error debug]]
-            [bob-poc.match.match-handler :refer [send-new-data-to-clients]])
+            [bob-poc.match.match-handler :refer [send-new-data-to-clients]]
+            [bob-poc.application.data :refer [get-bands]])
   (:import (org.joda.time Interval)))
 
-(def ^:private full-band-list [{:id 1 :name "Metallica" :soundcloud "https://soundcloud.com/redkaukasus/virago"
-                                :image "http://previews.123rf.com/images/stockbroker/stockbroker1408/stockbroker140801481/31021178-Male-Owner-Of-Coffee-Shop-Stock-Photo-business.jpg" :votes 0}
-                               {:id 2 :name "Slipknot" :soundcloud "https://soundcloud.com/redkaukasus/celebration"
-                                :image "http://previews.123rf.com/images/stockbroker/stockbroker1506/stockbroker150602259/41392692-Two-women-at-a-meeting-in-a-cafe-Stock-Photo-woman-women.jpg" :votes 0}
-                               {:id 3 :name "Foo Fighters" :soundcloud "https://soundcloud.com/redkaukasus/flittermice"
-                                :image "http://previews.123rf.com/images/iriana88w/iriana88w1409/iriana88w140900648/31574495-Small-grey-house-with-wooden-deck-Front-yard-with-flower-bed-and-lawn-Stock-Photo.jpg" :votes 0}
-                               {:id 4 :name "Gojira" :soundcloud "https://soundcloud.com/redkaukasus/veil-kite"
-                                :image "http://previews.123rf.com/images/stevanovicigor/stevanovicigor1511/stevanovicigor151100184/48597849-Real-estate-mortgage-concept-with-small-plastic-house-models-on-top-of-stacked-coins--Stock-Photo.jpg" :votes 0}])
-
 (def ^:private match-number (atom 0))
-(def ^:private bands (atom full-band-list))
+(def ^:private bands (atom []))
 (def ^:private current-standoff (atom []))
 (def ^:private next-match-start (atom nil))
 
 (defn reset-all-data! []
   (reset! match-number 0)
-  (reset! bands full-band-list)
+  (reset! bands (get-bands))
   (reset! current-standoff [])
   (reset! next-match-start nil))
 
@@ -36,7 +28,7 @@
 
 (defn- start-first-match! [match-duration]
   (info "Starting first match of the week!")
-  (reset! bands full-band-list)
+  (reset! bands (get-bands))
   (reset! match-number 1)
   (let [first-band (select-band!)
         second-band (select-band!)
@@ -69,12 +61,18 @@
 (defn- create-server-data []
   {:standoff @current-standoff :match @match-number :time (calc-match-time-left)})
 
-(defn start-match! [match-duration]
+(defn- start-first-or-next [match-duration]
   (debug "Starting match with duration" (t/in-seconds match-duration) "seconds")
   (if (or (empty? @bands) (empty? @current-standoff))
     (start-first-match! match-duration)
     (start-next-match! match-duration))
   (send-new-data-to-clients (create-server-data)))
+
+(defn start-match! [match-duration]
+  (debug "Start match")
+  (debug @bands)
+  (if-not (empty? @bands)
+    (start-first-or-next match-duration)))
 
 (defn get-current-match []
   (debug "Returning current standoff.")
@@ -85,3 +83,6 @@
   (let [voted-standoff (swap! current-standoff #(map (fn [band] (inc-vote id band)) %))]
     (send-new-data-to-clients (create-server-data))
     (first (filter #(= (:id %) id) voted-standoff))))
+
+(defn add-new-bands [new-bands]
+  (reset! bands new-bands))
