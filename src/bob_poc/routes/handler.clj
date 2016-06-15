@@ -4,6 +4,7 @@
             [clojure.tools.logging :refer [info]]
             [bob-poc.routes.resource-routes :refer [resource-routes]]
             [bob-poc.routes.match-routes :refer [match-routes]]
+            [bob-poc.routes.band-routes :refer [band-routes]]
             [bob-poc.application.properties :refer [current-env]]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]))
 
@@ -27,7 +28,7 @@
       (handler req))))
 
 (def app
-  (-> (handler/api match-routes)
+  (-> (handler/api (routes match-routes band-routes))
       wrap-dir-index
       wrap-dev-cors-support
       (wrap-json-body {:keywords? true})
