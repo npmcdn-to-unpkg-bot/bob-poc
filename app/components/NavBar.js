@@ -2,7 +2,7 @@ var React = require('react');
 var serverConfig = require('../config/server').frontEndConfig;
 var SC = require('soundcloud');
 var Link = require('react-router').Link;
-var serverConnector = require('../server/serverConnector');
+var soundCloudId = require('../config/server').soundCloudId;
 
 function LeftSideNav (props) {
 	return (
@@ -87,7 +87,7 @@ var NavBar = React.createClass({
 	},
 	componentDidMount: function() {
 		SC.initialize({
-			client_id: 'f372d41f0b8cd51c53240982350ab4fb',
+			client_id: soundCloudId,
 			redirect_uri: 'http://' + serverConfig + '/callback.html'
 		});
 	},

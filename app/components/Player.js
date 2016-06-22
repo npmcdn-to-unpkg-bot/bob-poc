@@ -1,10 +1,11 @@
 var React = require('react');
 var SC = require('soundcloud');
+var soundCloudId = require('../config/server').soundCloudId;
 
 var Player = React.createClass({
     componentDidMount: function() {
         SC.initialize({
-            client_id: 'f372d41f0b8cd51c53240982350ab4fb'
+            client_id: soundCloudId
         });
         SC.oEmbed(this.props.soundcloudUrl, {
             element: document.getElementById('soundCloudDiv' + this.props.bandId),
