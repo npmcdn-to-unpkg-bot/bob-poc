@@ -2,6 +2,7 @@ var React = require('react');
 var serverConfig = require('../config/server').frontEndConfig;
 var SC = require('soundcloud');
 var Link = require('react-router').Link;
+var serverConnector = require('../server/serverConnector');
 
 function LeftSideNav (props) {
 	return (
@@ -23,8 +24,6 @@ function RightSideNav (props) {
 			imageSrc: "http://" + serverConfig + "/SC-connect.png",
 			imageAlt: "Login with SoundCloud"
 		};
-
-	console.log(props.loggedUser);
 
 	var loggedInAs = props.isConnected ? <li><a href={props.loggedUser.permalink_url}>Logged in as {props.loggedUser.username}</a></li> : null;
 	var loggedUserLinks = props.isConnected ? <li><Link to={{ pathname: '/uploadSong',  query: {bandId: props.loggedUser.id} }}><button type="button" className="btn btn-sm btn-success">Upload a song</button></Link></li> : null;
@@ -70,7 +69,7 @@ function NavBarWrapper (props) {
 var NavBar = React.createClass({
 	getInitialState: function () {
 		return {
-			isLoggedIn: false,
+			loggedIn: false,
 			loggedUser: null
 		}
 	},
@@ -79,19 +78,12 @@ var NavBar = React.createClass({
 		SC.connect().then(function() {
 			return SC.get('/me');
 		}).then(function(me) {
-			console.log("Logged in " + me.username);
-			this.setState({
-				isLoggedIn: true,
-				loggedUser: me
-			});
+			this.setState(Object.assign(this.state, {loggedUser: me, loggedIn: true}));
 		}.bind(this));
 	},
 	disconnectFromSoundCloud: function() {
 		sessionStorage.clear();
-		this.setState({
-			isLoggedIn: false,
-			loggedUser: null
-		});
+		this.setState(Object.assign(this.state, {loggedUser: null, loggedIn: false}));
 	},
 	componentDidMount: function() {
 		SC.initialize({
@@ -101,10 +93,10 @@ var NavBar = React.createClass({
 	},
 	render: function () {
 		return (
-			<NavBarWrapper isConnected={this.state.isLoggedIn}
+			<NavBarWrapper isConnected={this.state.loggedIn}
 						   handleLoginClick={this.connectToSoundCloud}
 						   handleLogoutClick={this.disconnectFromSoundCloud}
-						   loggedUser={this.state.loggedUser}  />
+						   loggedUser={this.state.loggedUser} />
 			)}
 });
 

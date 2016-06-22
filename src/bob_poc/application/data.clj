@@ -20,6 +20,6 @@
         new-band {:id id :name band-name :soundcloud stream-url :image band-image :votes 0}]
     (swap! waiting-list conj new-band)
     (info @waiting-list)
-    (if (= (current-waiting-list-size) 4)
+    (if (= (current-waiting-list-size) 2)
       (start-new!))
     new-band))

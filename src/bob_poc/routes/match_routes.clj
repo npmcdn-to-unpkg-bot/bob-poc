@@ -15,9 +15,5 @@
       (debug "Requesting current match...")
       (ok (match/get-current-match)))
 
-    (GET "/disallowed" []
-      (debug "Requesting disallowed bands...")
-      (ok (match/get-disallowed-bands)))
-
     (POST "/vote" {{id :id} :body}
       (ok (match/vote! id)))))

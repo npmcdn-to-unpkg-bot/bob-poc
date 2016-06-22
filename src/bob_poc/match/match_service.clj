@@ -78,10 +78,6 @@
   (debug "Returning current standoff.")
   (create-server-data))
 
-(defn get-disallowed-bands []
-  (debug "returning disallowed bands.")
-  (map #(:name %) @bands))
-
 (defn vote! [id]
   (debug "Increasing vote for band with id" id)
   (let [voted-standoff (swap! current-standoff #(map (fn [band] (inc-vote id band)) %))]
