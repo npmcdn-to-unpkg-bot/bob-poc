@@ -28,11 +28,11 @@
 
 (defn- start-first-match! [match-duration]
   (info "Starting first match of the week!")
-  (reset! bands (get-bands))
   (reset! match-number 1)
   (let [first-band (select-band!)
         second-band (select-band!)
         faceoff [first-band second-band]]
+    (debug faceoff)
     (info "Selected bands:" faceoff)
     (reset! current-standoff faceoff)
     (reset-next-match-start! match-duration)))
@@ -70,7 +70,7 @@
 
 (defn start-match! [match-duration]
   (debug "Start match")
-  (debug @bands)
+  (reset! bands (get-bands))
   (if-not (empty? @bands)
     (start-first-or-next match-duration)))
 
@@ -78,11 +78,12 @@
   (debug "Returning current standoff.")
   (create-server-data))
 
+(defn get-disallowed-bands []
+  (debug "returning disallowed bands.")
+  (map #(:name %) @bands))
+
 (defn vote! [id]
   (debug "Increasing vote for band with id" id)
   (let [voted-standoff (swap! current-standoff #(map (fn [band] (inc-vote id band)) %))]
     (send-new-data-to-clients (create-server-data))
     (first (filter #(= (:id %) id) voted-standoff))))
-
-(defn add-new-bands [new-bands]
-  (reset! bands new-bands))
