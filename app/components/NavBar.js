@@ -2,8 +2,9 @@ var React = require('react');
 var serverConfig = require('../config/server').frontEndConfig;
 var SC = require('soundcloud');
 var Link = require('react-router').Link;
-var soundCloudId = require('../config/server').soundCloudId
-var serverConnector = require('../server/serverConnector');
+var soundCloudId = require('../config/server').soundCloudId;
+var Modal = require('react-bootstrap').Modal;
+var Button = require('react-bootstrap').Button;
 
 function LeftSideNav (props) {
 	return (
@@ -71,7 +72,8 @@ var NavBar = React.createClass({
 	getInitialState: function () {
 		return {
 			loggedIn: false,
-			loggedUser: null
+			loggedUser: null,
+			logout: false
 		}
 	},
 	connectToSoundCloud: function() {
@@ -82,9 +84,21 @@ var NavBar = React.createClass({
 			this.setState(Object.assign(this.state, {loggedUser: me, loggedIn: true}));
 		}.bind(this));
 	},
+	onLogout: function () {
+		this.setState(Object.assign(this.state, {logout: true}));
+	},
+	cancelLogout: function () {
+		this.setState(Object.assign(this.state, {logout: false}));
+	},
 	disconnectFromSoundCloud: function() {
-		this.setState(Object.assign(this.state, {loggedUser: null, loggedIn: false}));
-		window.location = "https://soundcloud.com/logout";
+		this.setState(Object.assign(this.state, {loggedUser: null, loggedIn: false, logout: false}));
+	},
+	close: function () {
+		var currState = this.state;
+		currState.songSubmitted = false;
+		this.setState(currState);
+
+		this.context.router.push({ pathname: '/' });
 	},
 	componentDidMount: function() {
 		SC.initialize({
@@ -94,10 +108,21 @@ var NavBar = React.createClass({
 	},
 	render: function () {
 		return (
-			<NavBarWrapper isConnected={this.state.loggedIn}
-						   handleLoginClick={this.connectToSoundCloud}
-						   handleLogoutClick={this.disconnectFromSoundCloud}
-						   loggedUser={this.state.loggedUser} />
+			<div>
+				<NavBarWrapper isConnected={this.state.loggedIn}
+							   handleLoginClick={this.connectToSoundCloud}
+							   handleLogoutClick={this.onLogout}
+							   loggedUser={this.state.loggedUser} />
+				<Modal show={this.state.logout}>
+					<Modal.Body>
+						<h4>Are you sure you want to log out?</h4>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button onClick={this.disconnectFromSoundCloud}>OK</Button>
+						<Button onClick={this.cancelLogout}>Cancel</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
 			)}
 });
 
