@@ -10,7 +10,6 @@ var serverConnector = require('../server/serverConnector');
 
 var Submit = function (props) {
     var options = props.songs.filter(props.filterResults).map(function (song) {
-        console.log(song);
         return {value: song.permalink, label: song.title};
     });
 

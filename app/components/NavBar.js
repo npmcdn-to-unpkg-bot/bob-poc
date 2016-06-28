@@ -2,7 +2,8 @@ var React = require('react');
 var serverConfig = require('../config/server').frontEndConfig;
 var SC = require('soundcloud');
 var Link = require('react-router').Link;
-var soundCloudId = require('../config/server').soundCloudId;
+var soundCloudId = require('../config/server').soundCloudId
+var serverConnector = require('../server/serverConnector');
 
 function LeftSideNav (props) {
 	return (
@@ -33,7 +34,7 @@ function RightSideNav (props) {
 				{loggedInAs}
 				{loggedUserLinks}
 				<li>
-					<a href="#" onClick={soundCloudButtonProps.clickHandler}>
+					<a style={{ cursor: 'pointer' }} onClick={soundCloudButtonProps.clickHandler}>
 						<img src={soundCloudButtonProps.imageSrc} alt={soundCloudButtonProps.imageAlt} />
 					</a>
 				</li>
@@ -82,8 +83,8 @@ var NavBar = React.createClass({
 		}.bind(this));
 	},
 	disconnectFromSoundCloud: function() {
-		sessionStorage.clear();
 		this.setState(Object.assign(this.state, {loggedUser: null, loggedIn: false}));
+		window.location = "https://soundcloud.com/logout";
 	},
 	componentDidMount: function() {
 		SC.initialize({
