@@ -1,10 +1,16 @@
 (ns match-service-spec
   (:require [speclj.core :refer :all]
             [bob-poc.match.match-service :as match-service]
-            [clj-time.core :as t]))
+            [clj-time.core :as t]
+            [bob-poc.application.data :as data]))
+
+(defn insert-test-bands []
+  (data/add-new-song! "testband1" "bandimage1.jpg" "http://blaablaablaa1")
+  (data/add-new-song! "testband2" "bandimage2.jpg" "http://blaablaablaa2"))
 
 (describe "match service"
-  (before (match-service/reset-all-data!))
+  (before (match-service/reset-all-data!)
+          (insert-test-bands))
 
   (it "should start a new match"
     (should= {:standoff [], :match 0, :time 0} (match-service/get-current-match))
@@ -36,4 +42,12 @@
       (match-service/start-match! (t/seconds 15))
       (let [new-match (match-service/get-current-match)]
         (should-not= first-match new-match)
-        (should= 2 (:match new-match))))))
+        (should= 2 (:match new-match)))))
+
+  (it "should return current standoff"
+    (match-service/start-match! (t/seconds 15))
+    (let [current-match (match-service/get-current-match)]
+      (should= {:standoff [{:id 2 :name "testband2" :soundcloud "http://blaablaablaa2" :image "bandimage2.jpg" :votes 0}
+                           {:id 1 :name "testband1" :soundcloud "http://blaablaablaa1" :image "bandimage1.jpg" :votes 0}]
+                :match 1 :time 15000}
+               current-match))))

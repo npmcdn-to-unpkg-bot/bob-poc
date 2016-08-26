@@ -12,7 +12,7 @@
 
 (defn start-new! []
   (let [new-bands @waiting-list]
-    (reset! current-bands new-bands)
+    (test (reset! current-bands new-bands))
     (reset! waiting-list [])))
 
 (defn add-new-song! [band-name band-image stream-url]
